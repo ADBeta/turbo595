@@ -48,51 +48,40 @@ void turbo595_init(turbo595_t *dev,
 }
 
 /** Write functions ***********************************************************/
-//Write 1 byte to the Shift Register.
-void turbo595_write_byte(turbo595_t *dev,uint8_t b) {
+void turbo595_write8(turbo595_t *dev,uint8_t data) {
 	//8Bits is the chASM write() max depth, so setting a bit and checking is not
 	//needed here. This will be the fastest function (as expected anyway).
-	for(uint8_t cBit = 0; cBit < 8; cBit++) {
+	for(uint8_t cur_bit = 0; cur_bit < 8; cur_bit++) {
 		//TX The current bit
-		tx_bit(dev, b & 0x80);
+		tx_bit(dev, data & 0x80);
 		//Shift the next bit into the mask position.
-		b = b << 1;
+		data = data << 1;
 	}
 	
 	latch(dev);
 }
 
-//Write a 2 byte int to the Shift Register.
-void turbo595_write_int(turbo595_t *dev, uint16_t i) {
+void turbo595_write16(turbo595_t *dev, uint16_t data) {
 	//This function uses a bit depth greater than chASMs' write() can handle.
 	//To get around this, set a flag bit based on the MSB of the value passed.
-	for(uint8_t bit_sent = 0; bit_sent < 16; bit_sent++) {
-		//If the MSB is 1, set the cBit to 1, to fit chASM2s bit depth.
-		bool cBit = 0;
-		if(i & 0x8000) cBit = 1;
-		
+	for(uint8_t cur_bit = 0; cur_bit < 16; cur_bit++) {
 		//TX The current bit
-		tx_bit(dev, cBit);
+		tx_bit(dev, (data & 0x8000));
 		//Shift the next bit into the mask position.
-		i = i << 1;
+		data = data << 1;
 	}
 
 	latch(dev);
 }
 
-//Write a 4 byte long to the Shift Register.
-void turbo595_write_long(turbo595_t *dev, uint32_t l) {
+void turbo595_write32(turbo595_t *dev, uint32_t data) {
 	//This function uses a bit depth greater than chASMs' write() can handle.
 	//To get around this, set a flag bit based on the MSB of the value passed.
-	for(uint8_t bit_sent = 0; bit_sent < 32; bit_sent++) {
-		//If the MSB is 1, set the cBit to 1, to fit chASM2s bit depth.
-		bool cBit = 0;
-		if(l & 0x800000) cBit = 1;
-		
+	for(uint8_t cur_bit = 0; cur_bit < 32; cur_bit++) {
 		//TX The current bit
-		tx_bit(dev, cBit);
+		tx_bit(dev, (data & 0x800000));
 		//Shift the next bit into the mask position.
-		l = l << 1;
+		data = data << 1;
 	}
 	
 	latch(dev);

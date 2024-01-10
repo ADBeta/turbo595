@@ -26,14 +26,14 @@ typedef struct {
 void turbo595_init(turbo595_t*, uint8_t, uint8_t, uint8_t);
 
 /** Write functions *******************************************************/
-//Write 1 byte to the Shift Register.
-void turbo595_write_byte(turbo595_t*, uint8_t b);
+//Write 8bits to the Shift Register.
+void turbo595_write8(turbo595_t*, uint8_t);
 
-//Write a 2 byte int to the Shift Register.
-void turbo595_write_int(turbo595_t*, uint16_t i);
+//Write 16bits to the Shift Register.
+void turbo595_write16(turbo595_t*, uint16_t);
 
-//Write a 4 byte long to the Shift Register.
-void turbo595_write_long(turbo595_t*, uint32_t l);
+//Write 32bits to the Shift Register.
+void turbo595_write32(turbo595_t*, uint32_t);
 
 //Write an array of arbitrary size to the Shift Register.
 void turbo595_write_array(turbo595_t*, uint8_t* arr, uint16_t n);
