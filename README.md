@@ -34,5 +34,5 @@ turbo595_write_array(&shift_reg, 8, *array);
 ## Changelog
 
 --------------------------------------------------------------------------------
-<b>(c) ADBeta 2023</b>  
+<b>(c) ADBeta 2023-2024</b>  
 This software is under the GPL v2 licence. Please read the LICENCE file
